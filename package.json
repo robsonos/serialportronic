@@ -11,7 +11,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "install": "electron-rebuild"
   },
   "private": true,
   "dependencies": {
@@ -26,6 +27,7 @@
     "@ionic/angular": "^4.0.0",
     "core-js": "^2.5.4",
     "rxjs": "~6.3.3",
+    "serialport": "^7.1.4",
     "zone.js": "~0.8.29"
   },
   "devDependencies": {
@@ -44,6 +46,7 @@
     "codelyzer": "~4.5.0",
     "electron": "^4.0.6",
     "electron-builder": "^20.38.5",
+    "electron-rebuild": "^1.8.4",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~3.1.4",
