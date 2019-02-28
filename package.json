@@ -9,7 +9,9 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "private": true,
   "dependencies": {
@@ -55,5 +57,15 @@
     "typescript": "~3.1.6"
   },
   "description": "An Ionic project",
-  "main": "electron/main.js"
+  "main": "electron/main.js",
+  "build": {
+    "appId": "com.ionictronport",
+    "files": [
+      "electron/main.js",
+      "www/**/*"
+    ],
+    "mac": {
+      "category": "productivity"
+    }
+  }
 }
