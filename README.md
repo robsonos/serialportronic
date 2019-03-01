@@ -27,6 +27,12 @@ cd serialportronic
 npm install
 ```
 
+## Building appication
+
+```
+ionic build --prod
+```
+
 ## Running tests
 
 ```

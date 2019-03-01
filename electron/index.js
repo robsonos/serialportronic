@@ -1,52 +1,45 @@
-var { app, BrowserWindow } = require("electron");
-var path = require("path");
-var url = require("url");
-var Splashscreen = require("@trodi/electron-splashscreen");
+const { app, BrowserWindow } = require("electron");
+const path = require("path");
+const url = require("url");
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
-var window = BrowserWindow;
+// Place holders for our windows so they don't get garbage collected.
+let mainWindow;
 
-function createWindow() {
-  // Window options
-  var windowOptions = {
-    width: 1200,
+async function createWindow() {
+  // Define our main window size
+  mainWindow = new BrowserWindow({
     height: 800,
-    show: false
-  };
-
-  // Splash Screen
-  window = Splashscreen.initSplashScreen({
-    windowOpts: windowOptions,
-    templateUrl: path.join(__dirname, "assets/splash.html"),
-    delay: 0,
-    splashScreenOpts: {
-      height: 300,
-      width: 300,
-      backgroundColor: "white"
-      // transparent: true,
+    width: 1200,
+    show: false,
+    webPreferences: {
+      nodeIntegration: true
     }
   });
 
-  // Load ionic
-  var startUrl =
-    process.env.ELECTRON_START_URL ||
-    url.format({
-      pathname: path.join(__dirname, "../www/index.html"),
-      protocol: "file:",
-      slashes: true
-    });
-  window.loadURL(startUrl);
+  // Load ionic framework
+  var startUrl = url.format({
+    pathname: path.join(__dirname, "../www/index.html"),
+    protocol: "file:",
+    slashes: true
+  });
+
+  // If we are developers we might as well open the devtools by default.
+  mainWindow.loadURL(startUrl);
 
   // Open the DevTools.
-  window.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
+
+  // Open main window after dom is ready
+  mainWindow.webContents.on("dom-ready", () => {
+    mainWindow.show();
+  });
 
   // Emitted when the window is closed.
-  window.on("closed", function() {
+  mainWindow.on("closed", function() {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    window = null;
+    mainWindow = null;
   });
 }
 
@@ -67,7 +60,7 @@ app.on("window-all-closed", function() {
 app.on("activate", function() {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  if (window === null) {
+  if (mainWindow === null) {
     createWindow();
   }
 });

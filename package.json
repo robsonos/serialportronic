@@ -45,7 +45,6 @@
     "@angular/router": "^7.2.2",
     "@ionic-native/core": "^5.0.0",
     "@ionic/angular": "^4.0.0",
-    "@trodi/electron-splashscreen": "^0.3.4",
     "core-js": "^2.5.4",
     "rxjs": "~6.3.3",
     "serialport": "^7.1.4",
