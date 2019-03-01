@@ -1,8 +1,28 @@
 {
-  "name": "ionic-electron",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "name": "Serialportronic",
+  "version": "1.0.0-alpha-1",
+  "author": "Robson Oliveira dos Santos",
+  "homepage": "https://github.com/robsonos",
+  "description": "Ionic + Electron + Serialport",
+  "keywords": [
+    "ionic",
+    "electron",
+    "serialport",
+    "demo",
+    "typescript"
+  ],
+  "license": "MIT",
+  "main": "electron/index.js",
+  "build": {
+    "appId": "com.serialportronic",
+    "files": [
+      "electron/index.js",
+      "www/**/*"
+    ],
+    "mac": {
+      "category": "communication"
+    }
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -10,9 +30,11 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "pack": "electron-builder --dir",
-    "dist": "electron-builder",
-    "install": "electron-rebuild"
+    "pack": "tsc electron/index.ts && electron-builder --dir",
+    "pack2": "tsc electron/index.ts && electron-packager . --out=dist --overwrite",
+    "dist": "tsc electron/index.ts && electron-builder",
+    "install": "electron-rebuild",
+    "electron": "tsc electron/index.ts && electron ."
   },
   "private": true,
   "dependencies": {
@@ -25,6 +47,7 @@
     "@angular/router": "^7.2.2",
     "@ionic-native/core": "^5.0.0",
     "@ionic/angular": "^4.0.0",
+    "@trodi/electron-splashscreen": "^0.3.4",
     "core-js": "^2.5.4",
     "rxjs": "~6.3.3",
     "serialport": "^7.1.4",
@@ -46,6 +69,7 @@
     "codelyzer": "~4.5.0",
     "electron": "^4.0.6",
     "electron-builder": "^20.38.5",
+    "electron-packager": "^13.1.0",
     "electron-rebuild": "^1.8.4",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
@@ -58,17 +82,5 @@
     "ts-node": "~8.0.0",
     "tslint": "~5.12.0",
     "typescript": "~3.1.6"
-  },
-  "description": "An Ionic project",
-  "main": "electron/main.js",
-  "build": {
-    "appId": "com.ionictronport",
-    "files": [
-      "electron/main.js",
-      "www/**/*"
-    ],
-    "mac": {
-      "category": "productivity"
-    }
   }
 }
