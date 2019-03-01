@@ -1,5 +1,5 @@
 {
-  "name": "Serialportronic",
+  "name": "serialportronic",
   "version": "1.0.0-alpha-1",
   "author": "Robson Oliveira dos Santos",
   "homepage": "https://github.com/robsonos",
@@ -30,11 +30,11 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "pack": "tsc electron/index.ts && electron-builder --dir",
-    "pack2": "tsc electron/index.ts && electron-packager . --out=dist --overwrite",
-    "dist": "tsc electron/index.ts && electron-builder",
+    "pack": "electron-builder --dir",
+    "pack2": "electron-packager . --out=dist --overwrite",
+    "dist": "electron-builder",
     "install": "electron-rebuild",
-    "electron": "tsc electron/index.ts && electron ."
+    "electron": "electron ."
   },
   "private": true,
   "dependencies": {
@@ -65,7 +65,7 @@
     "@ionic/angular-toolkit": "~1.4.0",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
-    "@types/node": "~10.12.0",
+    "@types/node": "^10.12.27",
     "codelyzer": "~4.5.0",
     "electron": "^4.0.6",
     "electron-builder": "^20.38.5",
