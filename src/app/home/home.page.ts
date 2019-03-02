@@ -1,7 +1,6 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { ElectronService } from "../services/electron.service";
 
-//TODO: create separate file for interfaces
 declare interface dataRow {
   id?: number;
   comName?: string;
@@ -16,12 +15,11 @@ declare interface TableData {
 }
 
 @Component({
-  selector: "app-tab1",
-  templateUrl: "tab1.page.html",
-  styleUrls: ["tab1.page.scss"]
+  selector: "app-home",
+  templateUrl: "./home.page.html",
+  styleUrls: ["./home.page.scss"]
 })
-export class Tab1Page {
-  //TODO: Buffer?
+export class HomePage implements OnInit {
   constructor(public electronService: ElectronService) {}
 
   public tableData: TableData;
