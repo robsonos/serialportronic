@@ -106,3 +106,4 @@ Pull requests for new features, bug fixes, and suggestions are welcome!
 ## Credits
 
 This repo is based on [Sunghah](https://github.com/Sunghah/serialportron)`s serialportron project.
+Icons made by [Freepik](https://www.freepik.com/) from [Flaticon](https://www.flaticon.com/) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/)
