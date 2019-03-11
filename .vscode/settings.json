@@ -1,0 +1,10 @@
+{
+  "editor.formatOnType": true,
+  "files.insertFinalNewline": true,
+  "html.format.endWithNewline": true,
+  "javascript.preferences.quoteStyle": "single",
+  "typescript.preferences.quoteStyle": "single",
+  "prettier.singleQuote": true,
+  "prettier.printWidth": 140,
+  "editor.formatOnSave": true
+}

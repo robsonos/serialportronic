@@ -1,11 +1,12 @@
 {
   "name": "serialportronic",
   "version": "1.0.0-alpha-1",
-  "author": "Robson Oliveira dos Santos",
+  "author": "Robson Oliveira dos Santos <robsonos@outlook.com>",
   "homepage": "https://github.com/robsonos",
-  "description": "Ionic + Electron + Serialport",
+  "description": "Ionic + Angular +Electron + Serialport demo",
   "keywords": [
     "ionic",
+    "angular",
     "electron",
     "serialport",
     "demo",
@@ -15,24 +16,46 @@
   "main": "electron/index.js",
   "build": {
     "appId": "com.serialportronic",
+    "productName": "Serialportronic",
     "files": [
-      "electron/index.js",
+      "electron/**/*",
       "www/**/*"
     ],
     "mac": {
-      "category": "communication"
+      "category": "public.app-category.utilities"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis"
+        }
+      ]
+    },
+    "nsis": {
+      "deleteAppDataOnUninstall": true,
+      "shortcutName": "Serialportronic"
+    },
+    "linux": {
+      "description": "Ionic + Angular +Electron + Serialport demo",
+      "category": "Utility",
+      "target": "deb"
     }
   },
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e",
+    "postinstall": "electron-builder install-app-deps",
+    "rebuild": "npm rebuild && npm i",
+    "ionic:start": "ionic serve --no-open",
     "electron": "electron .",
-    "install": "electron-rebuild",
-    "pack": "electron-packager . --out=dist --overwrite"
+    "electron:serve": "wait-on http-get://localhost:8100/ && electron . --address=http://localhost:8100",
+    "serve": "npm-run-all -p ionic:start electron:serve",
+    "serve:prod": "cross-env ELECTRON_IS_DEV=0 npm run serve",
+    "build": "npm prune && ionic build --prod",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "dist:all": "electron-builder -mwl",
+    "build:pack": "npm-run-all build pack",
+    "build:dist": "npm-run-all build dist",
+    "build:dist:all": "npm-run-all build dist:all"
   },
   "private": true,
   "dependencies": {
@@ -45,7 +68,9 @@
     "@angular/router": "^7.2.2",
     "@ionic-native/core": "^5.0.0",
     "@ionic/angular": "^4.0.0",
+    "@ionic/storage": "^2.2.0",
     "core-js": "^2.5.4",
+    "electron-is-dev": "^1.0.1",
     "rxjs": "~6.3.3",
     "serialport": "^7.1.4",
     "zone.js": "~0.8.29"
@@ -64,9 +89,10 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^10.12.27",
     "codelyzer": "~4.5.0",
+    "cross-env": "^5.2.0",
     "electron": "^4.0.6",
-    "electron-packager": "^13.1.0",
-    "electron-rebuild": "^1.8.4",
+    "electron-builder": "^20.38.5",
+    "electron-reload": "^1.4.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~3.1.4",
@@ -74,9 +100,11 @@
     "karma-coverage-istanbul-reporter": "~2.0.1",
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "npm-run-all": "^4.1.5",
     "protractor": "~5.4.0",
     "ts-node": "~8.0.0",
     "tslint": "~5.12.0",
-    "typescript": "~3.1.6"
+    "typescript": "~3.1.6",
+    "wait-on": "^3.2.0"
   }
 }
