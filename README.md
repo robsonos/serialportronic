@@ -2,7 +2,7 @@
 
 ## Ionic Angular + Serialport + Electron
 
-Minimal stater application using [Electron](https://electronjs.org/) and [Serialport](https://serialport.io/) in an [Ionic](https://ionicframework.com/)/
+Minimal stater application using [Electron](https://electronjs.org/) and [Serialport](https://serialport.io/) in an [Ionic](https://ionicframework.com/) application.
 
 - [Angular](https://angular.io/) application.
 
