@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-
 import { Platform } from '@ionic/angular';
 
 @Component({
@@ -7,14 +6,25 @@ import { Platform } from '@ionic/angular';
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
-  constructor(
-    private platform: Platform,
-  ) {
+  public appPages = [
+    {
+      title: 'Status',
+      url: '/status',
+      icon: 'pulse'
+    },
+    {
+      title: 'Devices',
+      url: '/devices',
+      icon: 'desktop'
+    }
+  ];
+  constructor(private platform: Platform) {
     this.initializeApp();
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
+      // Do something
     });
   }
 }

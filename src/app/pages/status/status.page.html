@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>Status</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-list-header> Status </ion-list-header>
+
+    <ion-item button="true" (click)="toggleConnection()">
+      <ion-icon name="link" slot="start"></ion-icon>
+      <ion-label>
+        Connection
+        <ion-note>
+          <ng-template [ngIf]="serialDevice" [ngIfElse]="noDevice">
+            <ng-template [ngIf]="serialDevice.isConnected" [ngIfElse]="disconnected">{{ 'Connected to ' + serialDevice.name }}</ng-template>
+            <ng-template #disconnected>{{ 'Last connected to ' + serialDevice.name }}</ng-template>
+          </ng-template>
+          <ng-template #noDevice>Disconnected</ng-template>
+        </ion-note>
+      </ion-label>
+      <ng-template [ngIf]="serialDevice && serialDevice.isConnected">
+        <ion-badge slot="end" color="success">ON</ion-badge>
+      </ng-template>
+    </ion-item>
+
+    <ion-item button="true" (click)="toggleCommunication()">
+      <ion-icon name="swap" slot="start"></ion-icon>
+      <ion-label>
+        Communication
+        <ion-note>{{ serialDevice && serialDevice.isCommunicationOn ? 'Communicating with ' + serialDevice.name : '' }}</ion-note>
+      </ion-label>
+      <ion-badge *ngIf="serialDevice && serialDevice.isCommunicationOn" slot="end" color="success">ON</ion-badge>
+    </ion-item>
+
+    <ion-item button="true" (click)="toggleLog()">
+      <ion-icon name="paper" slot="start"></ion-icon>
+      <ion-label>
+        Data Logger <ion-note>{{ this.data && this.data.stt.log ? 'Logging data on ' + serialDevice.name : '' }}</ion-note>
+      </ion-label>
+      <ion-badge *ngIf="this.data && this.data.stt.log" slot="end" color="success">ON</ion-badge>
+    </ion-item>
+  </ion-list>
+
+  <ion-card>
+    <ion-toolbar color="primary">
+      <ion-title>Communication monitor</ion-title>
+      <ion-button slot="end" fill="clear" (click)="refreshConsole()">
+        <ion-icon name="refresh" color="dark"></ion-icon>
+      </ion-button>
+    </ion-toolbar>
+    <ion-card-content>
+      <div class="shell-body" color="primary">
+        <pre>{{ date ? (date | date: '[dd/MM/yy hh:mm:ss]:') : '' }} {{ data ? (data | json) : 'no data' }}</pre>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
