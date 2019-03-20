@@ -32,5 +32,6 @@ $RECYCLE.BIN/
 Thumbs.db
 UserInterfaceState.xcuserstate
 
-#Electron
-dist/
+.vscode
+!.vscode/extensions.json
+!.vscode/settings.json
