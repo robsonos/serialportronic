@@ -53,13 +53,12 @@ export class StatusPage implements OnInit {
     // Start listening to stream
     this.dataSubscription = this.serialPortService.dataStream().subscribe(receivedData => {
       this.zone.run(() => {
-        // this.receivedData = receivedData;
-        // this.date = new Date();
-
         try {
-          let json = JSON.stringify(receivedData);
-          let bufferOriginal = Buffer.from(JSON.parse(json).data);
-          this.receivedData = bufferOriginal.toString('utf8');
+          // let json = JSON.stringify(receivedData);
+          // let bufferOriginal = Buffer.from(JSON.parse(json).data);
+          // this.receivedData = bufferOriginal.toString('utf8');
+          this.receivedData = receivedData;
+          this.date = new Date();
 
           console.log('StatusPage.ionViewDidEnter JSON.parse ', receivedData);
         } catch (error) {

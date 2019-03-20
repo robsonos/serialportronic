@@ -117,7 +117,7 @@ export class SerialPortService {
           });
       });
 
-      this.serialPort.on('data', data => {
+      this.serialPort.pipe(new this.serialPortManager.parsers.Readline({ delimiter: '\n' })).on('data', data => {
         if (this.currentDevice.isCommunicationOn) {
           console.log('SerialPortService.connect serialPort.on.data', data);
           this.data.next(data);
@@ -194,7 +194,7 @@ export class SerialPortService {
 
   public write(cmd: any): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.serialPort.write(cmd, error => {
+      this.serialPort.write(cmd + '\n', error => {
         if (error) {
           console.error('SerialPortService.write write: ', error);
           reject(error);

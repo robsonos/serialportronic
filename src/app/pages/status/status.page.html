@@ -48,7 +48,7 @@
     </ion-toolbar>
     <ion-card-content>
       <div class="shell-body" color="primary">
-        <pre>{{ date ? (date | date: '[dd/MM/yy hh:mm:ss]:') : '' }} {{ receivedData ? (receivedData | json) : 'No data' }}</pre>
+        <pre>{{ date ? (date | date: '[dd/MM/yy hh:mm:ss]:') : '' }} {{ receivedData ? receivedData : 'No data' }}</pre>
       </div>
     </ion-card-content>
   </ion-card>
