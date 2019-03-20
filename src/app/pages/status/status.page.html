@@ -10,7 +10,7 @@
 
 <ion-content>
   <ion-list>
-    <ion-list-header> Status </ion-list-header>
+    <ion-list-header>Status</ion-list-header>
 
     <ion-item button="true" (click)="toggleConnection()">
       <ion-icon name="link" slot="start"></ion-icon>
@@ -28,35 +28,27 @@
         <ion-badge slot="end" color="success">ON</ion-badge>
       </ng-template>
     </ion-item>
-
-    <ion-item button="true" (click)="toggleCommunication()">
-      <ion-icon name="swap" slot="start"></ion-icon>
-      <ion-label>
-        Communication
-        <ion-note>{{ serialDevice && serialDevice.isCommunicationOn ? 'Communicating with ' + serialDevice.name : '' }}</ion-note>
-      </ion-label>
-      <ion-badge *ngIf="serialDevice && serialDevice.isCommunicationOn" slot="end" color="success">ON</ion-badge>
-    </ion-item>
-
-    <ion-item button="true" (click)="toggleLog()">
-      <ion-icon name="paper" slot="start"></ion-icon>
-      <ion-label>
-        Data Logger <ion-note>{{ this.data && this.data.stt.log ? 'Logging data on ' + serialDevice.name : '' }}</ion-note>
-      </ion-label>
-      <ion-badge *ngIf="this.data && this.data.stt.log" slot="end" color="success">ON</ion-badge>
-    </ion-item>
+    <ion-list-header>Communication</ion-list-header>
   </ion-list>
 
-  <ion-card>
+  <!-- TODO: Hide if disconnected -->
+  <ion-card color="light" *ngIf="serialDevice && serialDevice.isConnected">
     <ion-toolbar color="primary">
-      <ion-title>Communication monitor</ion-title>
-      <ion-button slot="end" fill="clear" (click)="refreshConsole()">
-        <ion-icon name="refresh" color="dark"></ion-icon>
-      </ion-button>
+      <ion-title>Send data</ion-title>
+    </ion-toolbar>
+    <ion-item color="light">
+      <ion-input required type="text" placeholder="Insert data" [(ngModel)]="sentData"></ion-input>
+    </ion-item>
+    <ion-button expand="full" size="medium" [disabled]="!sentData" (click)="sendData()">SEND</ion-button>
+  </ion-card>
+
+  <ion-card color="light" *ngIf="serialDevice && serialDevice.isConnected">
+    <ion-toolbar color="primary">
+      <ion-title>Received data</ion-title>
     </ion-toolbar>
     <ion-card-content>
       <div class="shell-body" color="primary">
-        <pre>{{ date ? (date | date: '[dd/MM/yy hh:mm:ss]:') : '' }} {{ data ? (data | json) : 'no data' }}</pre>
+        <pre>{{ date ? (date | date: '[dd/MM/yy hh:mm:ss]:') : '' }} {{ receivedData ? (receivedData | json) : 'No data' }}</pre>
       </div>
     </ion-card-content>
   </ion-card>
