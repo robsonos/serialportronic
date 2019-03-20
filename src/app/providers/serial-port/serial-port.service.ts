@@ -53,8 +53,7 @@ export class SerialPortService {
               vendorId: serialDevice.vendorId,
               productId: serialDevice.productId,
               isConnected: false,
-              isCommunicationOn: false,
-              isDataLoggerOn: false
+              isCommunicationOn: false
             };
 
             this.devices.push(tempPort);
@@ -90,7 +89,6 @@ export class SerialPortService {
         this.currentDevice = serialDevice;
         this.currentDevice.isConnected = true;
         this.currentDevice.isCommunicationOn = false;
-        this.currentDevice.isDataLoggerOn = false;
 
         this.storage
           .ready()
@@ -99,8 +97,7 @@ export class SerialPortService {
               id: this.currentDevice.id,
               name: this.currentDevice.name,
               isConnected: false,
-              isCommunicationOn: false,
-              isDataLoggerOn: false
+              isCommunicationOn: false
             };
 
             this.storage.set('lastSerialDevice', lastSerialDevice).then(() => {
@@ -120,7 +117,7 @@ export class SerialPortService {
           });
       });
 
-      this.serialPort.pipe(new this.serialPortManager.parsers.Readline({ delimiter: '\n' })).on('data', data => {
+      this.serialPort.on('data', data => {
         if (this.currentDevice.isCommunicationOn) {
           console.log('SerialPortService.connect serialPort.on.data', data);
           this.data.next(data);
@@ -143,13 +140,11 @@ export class SerialPortService {
           this.devices.forEach(dev => {
             dev.isConnected = false;
             dev.isCommunicationOn = false;
-            dev.isDataLoggerOn = false;
           });
         }
 
         this.currentDevice.isConnected = false;
         this.currentDevice.isCommunicationOn = false;
-        this.currentDevice.isDataLoggerOn = false;
 
         this.serialPort.on('close', () => {
           console.log('SerialPortService.disconnect serialPort.on.close');
@@ -197,7 +192,7 @@ export class SerialPortService {
     return this.data;
   }
 
-  public write(cmd: string): Promise<any> {
+  public write(cmd: any): Promise<any> {
     return new Promise((resolve, reject) => {
       this.serialPort.write(cmd, error => {
         if (error) {
