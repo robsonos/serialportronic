@@ -52,8 +52,7 @@ export class SerialPortService {
               manufacturer: serialDevice.manufacturer,
               vendorId: serialDevice.vendorId,
               productId: serialDevice.productId,
-              isConnected: false,
-              isCommunicationOn: false
+              isConnected: false
             };
 
             this.devices.push(tempPort);
@@ -88,7 +87,6 @@ export class SerialPortService {
       this.serialPort.on('open', () => {
         this.currentDevice = serialDevice;
         this.currentDevice.isConnected = true;
-        this.currentDevice.isCommunicationOn = false;
 
         this.storage
           .ready()
@@ -96,8 +94,7 @@ export class SerialPortService {
             let lastSerialDevice: SerialDevice = {
               id: this.currentDevice.id,
               name: this.currentDevice.name,
-              isConnected: false,
-              isCommunicationOn: false
+              isConnected: false
             };
 
             this.storage.set('lastSerialDevice', lastSerialDevice).then(() => {
@@ -118,10 +115,8 @@ export class SerialPortService {
       });
 
       this.serialPort.pipe(new this.serialPortManager.parsers.Readline({ delimiter: '\n' })).on('data', data => {
-        if (this.currentDevice.isCommunicationOn) {
-          console.log('SerialPortService.connect serialPort.on.data', data);
-          this.data.next(data);
-        }
+        console.log('SerialPortService.connect serialPort.on.data', data);
+        this.data.next(data);
       });
 
       this.serialPort.open(error => {
@@ -139,12 +134,10 @@ export class SerialPortService {
         if (this.devices) {
           this.devices.forEach(dev => {
             dev.isConnected = false;
-            dev.isCommunicationOn = false;
           });
         }
 
         this.currentDevice.isConnected = false;
-        this.currentDevice.isCommunicationOn = false;
 
         this.serialPort.on('close', () => {
           console.log('SerialPortService.disconnect serialPort.on.close');
@@ -166,26 +159,6 @@ export class SerialPortService {
 
   public isConnected(): boolean {
     return this.serialPort ? this.serialPort.isOpen : false;
-  }
-
-  public getDevices(): SerialDevice[] {
-    console.log('SerialPortService.getDevices', this.devices);
-    return this.devices;
-  }
-
-  public getConnectedDevice(): SerialDevice {
-    console.log('SerialPortService.getConnectedDevice', this.currentDevice);
-    return this.currentDevice;
-  }
-
-  public startCommunication() {
-    this.currentDevice.isCommunicationOn = true;
-    console.log('SerialPortService.startCommunication', this.currentDevice);
-  }
-
-  public stopCommunication() {
-    this.currentDevice.isCommunicationOn = false;
-    console.log('SerialPortService.stopCommunication', this.currentDevice);
   }
 
   public dataStream(): Observable<any> {

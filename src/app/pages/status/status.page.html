@@ -3,35 +3,31 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-
     <ion-title>Status</ion-title>
+    <ion-button slot="end" fill="clear" (click)="scan()">SCAN</ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
-    <ion-list-header>Status</ion-list-header>
+    <ion-list-header>Available devices</ion-list-header>
 
-    <ion-item button="true" (click)="toggleConnection()">
-      <ion-icon name="link" slot="start"></ion-icon>
-      <ion-label>
-        Connection
-        <ion-note>
-          <ng-template [ngIf]="serialDevice" [ngIfElse]="noDevice">
-            <ng-template [ngIf]="serialDevice.isConnected" [ngIfElse]="disconnected">{{ 'Connected to ' + serialDevice.name }}</ng-template>
-            <ng-template #disconnected>{{ 'Last connected to ' + serialDevice.name }}</ng-template>
-          </ng-template>
-          <ng-template #noDevice>Disconnected</ng-template>
-        </ion-note>
-      </ion-label>
-      <ng-template [ngIf]="serialDevice && serialDevice.isConnected">
-        <ion-badge slot="end" color="success">ON</ion-badge>
-      </ng-template>
-    </ion-item>
-    <ion-list-header>Communication</ion-list-header>
+    <ion-radio-group *ngIf="serialDevices && serialDevices.length; else noDevice">
+      <ion-item *ngFor="let serialDevice of serialDevices" button="true" (click)="toggleConnection(serialDevice)">
+        <ion-radio value="{{ serialDevice.id }}" slot="start"></ion-radio>
+        <ion-label>
+          {{ serialDevice.name }} <ion-note>{{ serialDevice.manufacturer }}</ion-note>
+        </ion-label>
+        <ion-badge *ngIf="serialDevice.isConnected" slot="end" color="success">ON</ion-badge>
+      </ion-item>
+    </ion-radio-group>
+    <ng-template #noDevice>
+      <ion-item lines="none">
+        <ion-note>Click scan to start</ion-note>
+      </ion-item>
+    </ng-template>
   </ion-list>
 
-  <!-- TODO: Hide if disconnected -->
   <ion-card color="light" *ngIf="serialDevice && serialDevice.isConnected">
     <ion-toolbar color="primary">
       <ion-title>Send data</ion-title>

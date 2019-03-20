@@ -5,5 +5,4 @@ export interface SerialDevice {
   vendorId?: string;
   productId?: string;
   isConnected: boolean;
-  isCommunicationOn: boolean;
 }

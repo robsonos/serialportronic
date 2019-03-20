@@ -1,9 +1,7 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { ToastController } from '@ionic/angular';
-import { Storage } from '@ionic/storage';
 import { Subscription } from 'rxjs';
 import { SerialPortService } from 'src/app/providers/serial-port/serial-port.service';
-import { DataLoggerService } from 'src/app/providers/data-logger/data-logger.service';
 import { SerialDevice } from 'src/app/interfaces/serial-device';
 
 @Component({
@@ -14,41 +12,17 @@ import { SerialDevice } from 'src/app/interfaces/serial-device';
 export class StatusPage implements OnInit {
   dataSubscription: Subscription;
   serialDevice: SerialDevice;
+  serialDevices: SerialDevice[];
   date: Date;
   sentData: any;
   receivedData: any;
 
-  constructor(
-    public serialPortService: SerialPortService,
-    public dataLoggerService: DataLoggerService,
-    public toastController: ToastController,
-    private storage: Storage,
-    public zone: NgZone
-  ) {}
+  constructor(public serialPortService: SerialPortService, public toastController: ToastController, public zone: NgZone) {}
 
   ngOnInit() {}
 
   ionViewWillEnter() {
     console.log('StatusPage.ionViewWillEnter');
-    // Get connected device
-    let connectedDevice: SerialDevice = this.serialPortService.getConnectedDevice();
-    if (connectedDevice) {
-      console.log('StatusPage.ionViewWillEnter connectedDevice ', connectedDevice);
-      this.serialDevice = connectedDevice;
-    } else {
-      // No devices, either hasn't scanned yet or no devices available. Get last connected device
-      this.storage.ready().then(() => {
-        this.storage
-          .get('lastSerialDevice')
-          .then(lastSerialDevice => {
-            this.serialDevice = lastSerialDevice;
-            console.log('StatusPage.ionViewWillEnter storage ', lastSerialDevice);
-          })
-          .catch(error => {
-            console.error('StatusPage.ionViewWillEnter storage ', error);
-          });
-      });
-    }
 
     // Start listening to stream
     this.dataSubscription = this.serialPortService.dataStream().subscribe(receivedData => {
@@ -73,38 +47,49 @@ export class StatusPage implements OnInit {
     this.dataSubscription.unsubscribe();
   }
 
-  toggleConnection() {
-    if (this.serialDevice && this.serialDevice.isConnected) {
+  toggleConnection(serialDevice: SerialDevice) {
+    if (this.serialPortService.isConnected() && this.serialDevices.find(dev => dev.name === serialDevice.name).isConnected) {
       // Disconnect
       this.serialPortService.disconnect().then(
         currentDevice => {
           if (this.serialDevice) {
             this.serialDevice = currentDevice;
-            console.log('DevicesPage.toggleConnection', currentDevice.isConnected);
             this.presentToast('Disconnected');
-            console.log('DevicesPage.toggleConnection disconnect', this.serialDevice);
+            console.log('StatusPage.toggleConnection disconnect', this.serialDevices);
           }
         },
         error => {
           this.presentToast('Error communicating with device: ' + error);
-          console.error('DevicesPage.toggleConnection disconnect: ', error);
+          console.error('StatusPage.toggleConnection disconnect: ', error);
         }
       );
     } else {
       // Connect
-      this.serialPortService.connect(this.serialDevice).then(
+      this.serialPortService.connect(serialDevice).then(
         currentDevice => {
           this.serialDevice = currentDevice;
-          this.serialPortService.startCommunication();
-          this.presentToast('Connected to ' + this.serialDevice.name);
-          console.log('DevicesPage.toggleConnection connect', this.serialDevice);
+          this.presentToast('Connected to ' + serialDevice.name);
+          console.log('StatusPage.toggleConnection connect', this.serialDevices);
         },
         error => {
-          this.presentToast('Error communicating with ' + this.serialDevice.name + ': ' + error);
-          console.error('DevicesPage.toggleConnection connect: ', error);
+          this.presentToast('Error communicating with ' + serialDevice.name + ': ' + error);
+          console.error('StatusPage.toggleConnection connect: ', error);
         }
       );
     }
+  }
+
+  scan() {
+    this.serialPortService.scan().then(
+      scannedDevices => {
+        this.serialDevices = scannedDevices;
+        console.log('StatusPage.scan scan: ', this.serialDevices);
+      },
+      error => {
+        this.presentToast('Error communicating with device: ' + error);
+        console.error('StatusPage.scan scan: ', error);
+      }
+    );
   }
 
   sendData() {
