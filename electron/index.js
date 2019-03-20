@@ -64,7 +64,7 @@ function createWindow() {
 
   // Open main window after dom is ready
   mainWindow.webContents.on('did-finish-load', () => {
-    mainWindow.show();
+    mainWindow.maximize();
   });
 
   // Emitted when the window is closed.
