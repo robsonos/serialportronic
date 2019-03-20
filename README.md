@@ -87,6 +87,28 @@ npm run build:dist:all
 
 PS: You may need to run the `build:pack` task before you run `serve` for the first time, as `electron-builder` will rebuild the required node modules for the current platform. The `pack` and `dist` tasks use the contents from the `www` folder, so you need to `build` the application first before using them. The application will be located inside `dist` folder.
 
+## Arduino exemple:
+
+```
+int period = 1000;
+unsigned long time_now = 0;
+
+void setup() {
+  Serial.begin(115200);
+}
+
+void loop() {
+  if (Serial.available() > 0)
+    Serial.write(Serial.read());
+
+  if (millis() > time_now + period) {
+    time_now = millis();
+    Serial.print("Hello World ");
+    Serial.println(millis());
+  }
+}
+```
+
 ## Built with
 
 - [VS Code](https://code.visualstudio.com/)
