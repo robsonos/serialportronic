@@ -1,6 +1,6 @@
 # Serialportronic
 
-![Serialportronic with sample code provided](https://raw.githubusercontent.com/robsonos/serialportronic/master/sample-image.png)
+<img src="https://raw.githubusercontent.com/robsonos/serialportronic/master/sample-image.png" alt="Serialportronic with sample code provided" width="500">
 
 ## Ionic Angular + Serialport + Electron
 
