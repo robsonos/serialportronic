@@ -1,5 +1,7 @@
 # Serialportronic
 
+![Serialportronic with sample code provided](https://raw.githubusercontent.com/robsonos/serialportronic/master/sample-image.png)
+
 ## Ionic Angular + Serialport + Electron
 
 Minimal stater application using [Electron](https://electronjs.org/) and [Serialport](https://serialport.io/) in an [Ionic](https://ionicframework.com/) application.
