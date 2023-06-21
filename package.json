@@ -68,11 +68,11 @@
     "@angular/router": "^7.2.15",
     "@ionic-native/core": "^5.16.0",
     "@ionic/angular": "^4.11.4",
-    "@ionic/storage": "^2.2.0",
+    "@ionic/storage": "2.2.0",
     "core-js": "^2.6.10",
     "electron-is-dev": "^1.1.0",
-    "rxjs": "~6.3.3",
-    "serialport": "^7.1.5",
+    "rxjs": "^6.5.0",
+    "serialport": "^8.0.0",
     "zone.js": "~0.8.29"
   },
   "devDependencies": {
@@ -88,6 +88,7 @@
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "^2.0.8",
     "@types/node": "^10.17.5",
+    "@types/serialport": "^8.0.2",
     "codelyzer": "~4.5.0",
     "cross-env": "^5.2.1",
     "electron": "^4.2.12",
@@ -104,7 +105,7 @@
     "protractor": "~5.4.0",
     "ts-node": "^8.0.3",
     "tslint": "~5.12.0",
-    "typescript": "~3.1.6",
+    "typescript": "~3.2.0",
     "wait-on": "^3.3.0"
   }
 }

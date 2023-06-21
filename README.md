@@ -10,11 +10,11 @@ Minimal stater application using [Electron](https://electronjs.org/) and [Serial
 
 ## Prerequisites:
 
-- [Node and npm](https://nodejs.org/en/download/)
-- Additional node packages:
+- [Node 12](https://nodejs.org/en/blog/release/v12.22.12)
+- Ionic CLI v6:
 
 ```
-npm i -g ionic electron cross-env
+npm i -g @ionic/cli@6
 ```
 
 - For windows development, install [Windows-Build-Tools](https://ionicframework.com/):

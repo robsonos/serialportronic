@@ -48,7 +48,7 @@ export class SerialPortService {
           serialDevices.forEach(serialDevice => {
             let tempPort: SerialDevice = {
               id: index,
-              name: serialDevice.comName,
+              name: serialDevice.path,
               manufacturer: serialDevice.manufacturer,
               vendorId: serialDevice.vendorId,
               productId: serialDevice.productId,
@@ -165,7 +165,7 @@ export class SerialPortService {
     return this.data;
   }
 
-  public write(cmd: any): Promise<any> {
+  public write(cmd: any): Promise<void> {
     return new Promise((resolve, reject) => {
       this.serialPort.write(cmd + '\n', error => {
         if (error) {
