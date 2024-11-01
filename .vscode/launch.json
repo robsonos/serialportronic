@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "android-webview",
+      "request": "attach",
+      "name": "Trusync Configurator: Android WebView",
+      "application": "com.corrosioninstruments.trusync",
+      "webRoot": "${workspaceFolder}/apps/trusync"
+    }
+  ]
+}

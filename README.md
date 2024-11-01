@@ -1,133 +1,81 @@
-# Serialportronic
+# Org
 
-<img src="https://raw.githubusercontent.com/robsonos/serialportronic/master/sample-image.png" alt="Serialportronic with sample code provided" width="500">
+<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
 
-## Ionic Angular + Serialport + Electron
+✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
 
-Minimal stater application using [Electron](https://electronjs.org/) and [Serialport](https://serialport.io/) in an [Ionic](https://ionicframework.com/) application.
+[Learn more about this workspace setup and its capabilities](https://nx.dev/getting-started/tutorials/angular-monorepo-tutorial?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
 
-- [Angular](https://angular.io/) application.
+## Finish your CI setup
 
-## Prerequisites:
+[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/m4LxyH1G83)
 
-- [Node 12](https://nodejs.org/en/blog/release/v12.22.12)
-- Ionic CLI v6:
+## Run tasks
 
-```
-npm i -g @ionic/cli@6
-```
+To run the dev server for your app, use:
 
-- For windows development, install [Windows-Build-Tools](https://ionicframework.com/):
-
-```
-npm i -g windows-build-tools
+```sh
+npx nx serve spie
 ```
 
-## Installation
+To create a production bundle:
 
-```
-git clone https://github.com/robsonos/serialportronic.git
-cd serialportronic
-npm install
+```sh
+npx nx build spie
 ```
 
-## Automated tasks
+To see all available targets to run for a project, run:
 
-- Serving with hot reload
-
-```
-npm run serve
+```sh
+npx nx show project spie
 ```
 
-- Serving with hot reload (production mode)
+These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
 
-```
-npm run serve:prod
-```
+[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
 
-- Building
+## Add new projects
 
-```
-npm run build
-```
+While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
 
-- Packaging
+Use the plugin's generator to create new projects.
 
-```
-npm run pack
+To generate a new application, use:
+
+```sh
+npx nx g @nx/angular:app demo
 ```
 
-- Distributing (current platform)
+To generate a new library, use:
 
-```
-npm run dist
-```
-
-- Distributing (all platforms)
-
-```
-npm run dist:all
+```sh
+npx nx g @nx/angular:lib mylib
 ```
 
-- Building and packaging
+You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
 
-```
-npm run build:pack
-```
+[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
 
-- Building and distributing (current platform)
+[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
 
-```
-npm run build:dist
-```
+## Install Nx Console
 
-- Building and distributing (all platforms)
+Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
 
-```
-npm run build:dist:all
-```
+[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
 
-PS: You may need to run the `build:pack` task before you run `serve` for the first time, as `electron-builder` will rebuild the required node modules for the current platform. The `pack` and `dist` tasks use the contents from the `www` folder, so you need to `build` the application first before using them. The application will be located inside `dist` folder.
+## Useful links
 
-## Arduino exemple
+Learn more:
 
-```
-int period = 1000;
-unsigned long time_now = 0;
+- [Learn more about this workspace setup](https://nx.dev/getting-started/tutorials/angular-monorepo-tutorial?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
 
-void setup() {
-  Serial.begin(115200);
-}
+And join the Nx community:
 
-void loop() {
-  if (Serial.available() > 0)
-    Serial.write(Serial.read());
-
-  if (millis() > time_now + period) {
-    time_now = millis();
-    Serial.print("Hello World ");
-    Serial.println(millis());
-  }
-}
-```
-
-## Built with
-
-- [VS Code](https://code.visualstudio.com/)
-- [Ionic framework](https://ionicframework.com)
-- [Angular framework](https://angular.io/)
-- [Electron](https://electronjs.org/)
-- [Serialport](https://serialport.io/)
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Contributing
-
-Pull requests for new features, bug fixes, and suggestions are welcome!
-
-## Credits
-
-This repository is inspired on [Sung Hah Hwang](https://github.com/Sunghah/serialportron)`s serialportron project.
-Icons made by [Freepik](https://www.freepik.com/) from [Flaticon](https://www.flaticon.com/) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/)
+- [Discord](https://go.nx.dev/community)
+- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
+- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
+- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)

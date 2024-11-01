@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../../node_modules/nx-electron/src/validation/maker.schema.json",
+  "productName": "SPIE",
+  "publish": {
+    "provider": "github",
+    "owner": "robsonos",
+    "repo": "spie"
+  },
+  "nsis": {
+    "deleteAppDataOnUninstall": true
+  },
+  "win": {
+    "publisherName": ["Robson Oliveira dos Santos"],
+    "target": [
+      {
+        "target": "nsis",
+        "arch": ["x64"]
+      },
+      {
+        "target": "portable",
+        "arch": ["x64"]
+      }
+    ]
+  }
+}
